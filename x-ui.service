@@ -1,0 +1,14 @@
+[Unit]
+Description=vray-panel Service
+After=network.target
+Wants=network.target
+
+[Service]
+Environment="XRAY_VMESS_AEAD_FORCED=false"
+Type=simple
+WorkingDirectory=/usr/local/vray-panel/
+ExecStart=/usr/local/vray-panel/vray-panel
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
