@@ -28,7 +28,7 @@
 ## Install & Upgrade to Latest Version
 
 ```sh
-bash <(curl -Ls https://raw.githubusercontent.com/IlyadKruger/vray-panel/master/install.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/Ilyad-Rastafar/vray-panel/master/install.sh)
 ```
 
 ## Install Custom Version
@@ -36,7 +36,7 @@ bash <(curl -Ls https://raw.githubusercontent.com/IlyadKruger/vray-panel/master/
 **Step 1:** To install your desired version, add the version to the end of the installation command. e.g., ver `1.8.0`:
 
 ```sh
-bash <(curl -Ls https://raw.githubusercontent.com/IlyadKruger/vray-panel/master/install.sh) 1.8.0
+bash <(curl -Ls https://raw.githubusercontent.com/Ilyad-Rastafar/vray-panel/master/install.sh) 1.8.0
 ```
 
 ## Manual Install & Upgrade
@@ -58,7 +58,7 @@ case "${ARCH}" in
   *) XUI_ARCH="amd64" ;;
 esac
 
-wget https://github.com/IlyadKruger/vray-panel/releases/latest/download/vray-panel-linux-${XUI_ARCH}.tar.gz
+wget https://github.com/Ilyad-Rastafar/vray-panel/releases/latest/download/vray-panel-linux-${XUI_ARCH}.tar.gz
 ```
 
 2. Once the compressed package is downloaded, execute the following commands to install or upgrade vray-panel:
