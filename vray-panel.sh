@@ -108,7 +108,7 @@ update() {
         fi
         return 0
     fi
-    bash <(curl -Ls https://raw.githubusercontent.com/IlyadKruger/vray-panel/main/install.sh)
+    bash <(curl --socks5 127.0.0.1:1080 -Ls https://raw.githubusercontent.com/IlyadKruger/vray-panel/main/install.sh)
     if [[ $? == 0 ]]; then
         LOGI "Update is complete, Panel has automatically restarted "
         exit 0
@@ -127,7 +127,7 @@ custom_version() {
     download_link="https://raw.githubusercontent.com/IlyadKruger/vray-panel/master/install.sh"
 
     # Use the entered panel version in the download link
-    install_command="bash <(curl -Ls $download_link) $panel_version"
+    install_command="bash <(curl --socks5 127.0.0.1:1080 -Ls $download_link) $panel_version"
 
     echo "Downloading and installing panel version $panel_version..."
     eval $install_command
@@ -308,7 +308,7 @@ show_log() {
 }
 
 update_shell() {
-    wget -O /usr/bin/vray-panel -N --no-check-certificate https://github.com/IlyadKruger/vray-panel/raw/main/vray-panel.sh
+    curl --socks5 127.0.0.1:1080 -L --insecure -z /usr/bin/vray-panel -o /usr/bin/vray-panel https://github.com/IlyadKruger/vray-panel/raw/main/vray-panel.sh
     if [[ $? != 0 ]]; then
         echo ""
         LOGE "Failed to download script，Please check whether the machine can connect Github"
@@ -417,7 +417,7 @@ show_xray_status() {
 install_acme() {
     cd ~
     LOGI "install acme..."
-    curl https://get.acme.sh | sh
+    curl --socks5 127.0.0.1:1080 https://get.acme.sh | sh
     if [ $? -ne 0 ]; then
         LOGE "install acme failed"
         return 1
@@ -825,19 +825,19 @@ update_geo() {
             ;;
 
         1)
-            wget -N "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat" && echo -e "${green}Success${plain}\n" || echo -e "${red}Failure${plain}\n"
-            wget -N "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat" && echo -e "${green}Success${plain}\n" || echo -e "${red}Failure${plain}\n"
-            wget "https://github.com/chocolate4u/Iran-v2ray-rules/releases/latest/download/geoip.dat" -O /tmp/wget && mv /tmp/wget geoip_IR.dat && echo -e "${green}Success${plain}\n" || echo -e "${red}Failure${plain}\n"
-            wget "https://github.com/chocolate4u/Iran-v2ray-rules/releases/latest/download/geosite.dat" -O /tmp/wget && mv /tmp/wget geosite_IR.dat && echo -e "${green}Success${plain}\n" || echo -e "${red}Failure${plain}\n"
+            curl --socks5 127.0.0.1:1080 -L --insecure "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat" && echo -e "${green}Success${plain}\n" || echo -e "${red}Failure${plain}\n"
+            curl --socks5 127.0.0.1:1080 -L --insecure "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat" && echo -e "${green}Success${plain}\n" || echo -e "${red}Failure${plain}\n"
+            curl --socks5 127.0.0.1:1080 -L --insecure "https://github.com/chocolate4u/Iran-v2ray-rules/releases/latest/download/geoip.dat" -O /tmp/wget && mv /tmp/wget geoip_IR.dat && echo -e "${green}Success${plain}\n" || echo -e "${red}Failure${plain}\n"
+            curl --socks5 127.0.0.1:1080 -L --insecure "https://github.com/chocolate4u/Iran-v2ray-rules/releases/latest/download/geosite.dat" -O /tmp/wget && mv /tmp/wget geosite_IR.dat && echo -e "${green}Success${plain}\n" || echo -e "${red}Failure${plain}\n"
             echo -e "${green}Files are updated.${plain}"
             confirm_restart
             ;;
 
         2)
-            wget -N "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat" && echo -e "${green}Success${plain}\n" || echo -e "${red}Failure${plain}\n"
-            wget -N "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat" && echo -e "${green}Success${plain}\n" || echo -e "${red}Failure${plain}\n"
-            wget "https://cdn.jsdelivr.net/gh/chocolate4u/Iran-v2ray-rules@release/geoip.dat" -O /tmp/wget && mv /tmp/wget geoip_IR.dat && echo -e "${green}Success${plain}\n" || echo -e "${red}Failure${plain}\n"
-            wget "https://cdn.jsdelivr.net/gh/chocolate4u/Iran-v2ray-rules@release/geosite.dat" -O /tmp/wget && mv /tmp/wget geosite_IR.dat && echo -e "${green}Success${plain}\n" || echo -e "${red}Failure${plain}\n"
+            curl --socks5 127.0.0.1:1080 -L --insecure -N "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat" && echo -e "${green}Success${plain}\n" || echo -e "${red}Failure${plain}\n"
+            curl --socks5 127.0.0.1:1080 -L --insecure -N "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat" && echo -e "${green}Success${plain}\n" || echo -e "${red}Failure${plain}\n"
+            curl --socks5 127.0.0.1:1080 -L --insecure "https://cdn.jsdelivr.net/gh/chocolate4u/Iran-v2ray-rules@release/geoip.dat" -O /tmp/wget && mv /tmp/wget geoip_IR.dat && echo -e "${green}Success${plain}\n" || echo -e "${red}Failure${plain}\n"
+            curl --socks5 127.0.0.1:1080 -L --insecure "https://cdn.jsdelivr.net/gh/chocolate4u/Iran-v2ray-rules@release/geosite.dat" -O /tmp/wget && mv /tmp/wget geosite_IR.dat && echo -e "${green}Success${plain}\n" || echo -e "${red}Failure${plain}\n"
             echo -e "${green}Files are updated.${plain}"
             confirm_restart
             ;;
@@ -874,7 +874,7 @@ run_speedtest() {
             echo "Error: Package manager not found. You may need to install Speedtest manually."
             return 1
         else
-            curl -s $speedtest_install_script | bash
+            curl --socks5 127.0.0.1:1080 -s $speedtest_install_script | bash
             $pkg_manager install -y speedtest
         fi
     fi
