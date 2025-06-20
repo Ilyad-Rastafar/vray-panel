@@ -127,13 +127,13 @@ install_vray-panel() {
     cd /usr/local/
 
     if [ $# == 0 ]; then
-        last_version=$(curl -Ls "https://api.github.com/repos/IlyadKruger/vray-panel/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+        last_version=$(curl --socks5 127.0.0.1:1080 -Ls "https://api.github.com/repos/IlyadKruger/vray-panel/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
         if [[ ! -n "$last_version" ]]; then
             echo -e "${red}Failed to fetch vray-panel version, it maybe due to Github API restrictions, please try it later${plain}"
             exit 1
         fi
         echo -e "Got vray-panel latest version: ${last_version}, beginning the installation..."
-        wget -N --no-check-certificate -O /usr/local/vray-panel-linux-$(arch).tar.gz https://github.com/IlyadKruger/vray-panel/releases/download/${last_version}/vray-panel-linux-$(arch).tar.gz
+        curl --socks5 127.0.0.1:1080 -L --insecure -o /usr/local/vray-panel-linux-$(arch).tar.gz https://github.com/IlyadKruger/vray-panel/releases/download/${last_version}/vray-panel-linux-$(arch).tar.gz
         if [[ $? -ne 0 ]]; then
             echo -e "${red}Downloading vray-panel failed, please be sure that your server can access Github ${plain}"
             exit 1
@@ -142,7 +142,7 @@ install_vray-panel() {
         last_version=$1
         url="https://github.com/IlyadKruger/vray-panel/releases/download/${last_version}/vray-panel-linux-$(arch).tar.gz"
         echo -e "Beginning to install vray-panel v$1"
-        wget -N --no-check-certificate -O /usr/local/vray-panel-linux-$(arch).tar.gz ${url}
+        curl --socks5 127.0.0.1:1080 -L --insecure -o /usr/local/vray-panel-linux-$(arch).tar.gz ${url}
         if [[ $? -ne 0 ]]; then
             echo -e "${red}download vray-panel v$1 failed,please check the version exists${plain}"
             exit 1
@@ -167,7 +167,7 @@ install_vray-panel() {
     fi
     chmod +x vray-panel bin/xray-linux-$(arch)
     cp -f vray-panel.service /etc/systemd/system/
-    wget --no-check-certificate -O /usr/bin/vray-panel https://raw.githubusercontent.com/IlyadKruger/vray-panel/main/vray-panel.sh
+    curl --socks5 127.0.0.1:1080 -L --insecure -o /usr/bin/vray-panel https://raw.githubusercontent.com/IlyadKruger/vray-panel/main/vray-panel.sh
     chmod +x /usr/local/vray-panel/vray-panel.sh
     chmod +x /usr/bin/vray-panel
     config_after_install
@@ -202,5 +202,4 @@ install_vray-panel() {
 }
 
 echo -e "${green}Running...${plain}"
-install_dependencies
 install_vray-panel $1
